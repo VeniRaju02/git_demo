@@ -18,7 +18,8 @@
     </article> <!-- gallery-wrap .end// -->
             </aside>
             <main class="col-md-6 border-left">
-    <form action="{% url 'addcart' single_product.id %}" method="GET">          
+    <form action="{% url 'addcart' single_product.id %}" method="POST">
+        {% csrf_token %}          
         <article class="content-body">
         
         <h2 class="title">{{ single_product.product_name }}</h2>
@@ -32,11 +33,11 @@
         
         <hr>
             <div class="row">
-              {{ single_product.Variation }}
+              
                 <div class="item-option-select">
                     <h6>Choose Color</h6>
                     <select name="color" class="form-control">
-                      {% for i in single_product.variation_set.all %}
+                      {% for i in single_product.variation_set.colors %}
                       <option value="{{ i.variation_value }}" > {{ i.variation_value }} </option>
                       {% endfor %}
                     </select> 
@@ -45,20 +46,11 @@
             <div class="row">
                 <div class="item-option-select">
                     <h6>Select Size</h6>
-                    <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
-                      <label class="btn btn-light">
-                        <input type="radio" name="radio_color"> S
-                      </label>
-                      <label class="btn btn-light active">
-                        <input type="radio" name="radio_color" checked> M
-                      </label>
-                      <label class="btn btn-light">
-                        <input type="radio" name="radio_color"> L
-                      </label>
-                      <label class="btn btn-light">
-                        <input type="radio" name="radio_color"> XL
-                      </label>
-                    </div> 
+                    <select name="size" class="form-control">
+                    {% for i in single_product.variation_set.sizes %}
+                      <option value="{{ i.variation_value }}" > {{ i.variation_value }} </option>
+                      {% endfor %} 
+                    </select>
                 </div>
             </div> <!-- row.// -->
             <hr>
